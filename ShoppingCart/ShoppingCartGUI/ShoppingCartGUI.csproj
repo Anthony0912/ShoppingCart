@@ -48,13 +48,54 @@
     <Compile Include="FrmLogin.Designer.cs">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmSignUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSignUp.Designer.cs">
+      <DependentUpon>FrmSignUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmSignUp.resx">
+      <DependentUpon>FrmSignUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\close-white.png" />
+    <Content Include="Resources\min-white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShoppingCartBOL\ShoppingCartBOL.csproj">
+      <Project>{2f520f7f-36b8-4535-bbaa-5fd3ff584dff}</Project>
+      <Name>ShoppingCartBOL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShoppingCartEntities\ShoppingCartEntities.csproj">
+      <Project>{2429efef-a54a-4a78-80b7-3a3cfcb7573d}</Project>
+      <Name>ShoppingCartEntities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
