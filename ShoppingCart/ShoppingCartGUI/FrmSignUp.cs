@@ -10,11 +10,10 @@ using System.Windows.Forms;
 
 namespace ShoppingCartGUI
 {
-    public partial class FrmLogin : Form
+    public partial class FrmSignUp : Form
     {
         private Point MouseLocation;
-
-        public FrmLogin()
+        public FrmSignUp()
         {
             InitializeComponent();
         }
@@ -44,9 +43,9 @@ namespace ShoppingCartGUI
             }
         }
 
-        private void linkLabelSignUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkLabelLogin_LinkClicked(object sender, MouseEventArgs e)
         {
-            new FrmSignUp().Show();
+            new FrmLogin().Show();
             this.Hide();
         }
     }
