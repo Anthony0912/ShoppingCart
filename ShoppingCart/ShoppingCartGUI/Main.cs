@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoppingCartEntities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +13,7 @@ namespace ShoppingCartGUI
 {
     public partial class Main : Form
     {
+        public EUser eu{ get; set; }
         public Main()
         {
             InitializeComponent();

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ShoppingCartBOL;
+using ShoppingCartEntities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,9 +15,13 @@ namespace ShoppingCartGUI
     public partial class FrmSignUp : Form
     {
         private Point MouseLocation;
+        private EUser eu;
+        private UserBOL ubol;
         public FrmSignUp()
         {
             InitializeComponent();
+            eu = new EUser();
+            ubol = new UserBOL();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -47,6 +53,35 @@ namespace ShoppingCartGUI
         {
             new FrmLogin().Show();
             this.Hide();
+        }
+
+        private void btnSignUp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                eu.Name = txtName.Text?.Trim();
+                eu.Lastname = txtLastname.Text?.Trim();
+                eu.Email = txtEmail.Text?.Trim();
+                eu.Password = txtPassword.Text?.Trim();
+                string RepeatPassword = txtRepeatPassword.Text?.Trim();
+
+                if (!eu.Password.Equals(RepeatPassword))
+                {
+                    throw new Exception("Las contraseñas no son iguales.");
+                }
+                if (eu.Password.Length < 8 || RepeatPassword.Length < 8)
+                {
+                    throw new Exception("Tu contraseña debe tener más de ocho caracteres.");
+                }
+
+                ubol.SignUp(eu);
+                new Main { eu = eu }.ShowDialog();
+                Hide();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

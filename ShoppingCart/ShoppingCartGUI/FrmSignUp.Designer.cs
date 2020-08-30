@@ -149,7 +149,6 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(217, 20);
             this.txtEmail.TabIndex = 7;
-            this.txtEmail.UseSystemPasswordChar = true;
             // 
             // label4
             // 
@@ -214,6 +213,7 @@
             this.btnSignUp.TabIndex = 3;
             this.btnSignUp.Text = "Registrarme";
             this.btnSignUp.UseVisualStyleBackColor = false;
+            this.btnSignUp.Click += new System.EventHandler(this.btnSignUp_Click);
             // 
             // txtLastname
             // 
@@ -221,7 +221,6 @@
             this.txtLastname.Name = "txtLastname";
             this.txtLastname.Size = new System.Drawing.Size(217, 20);
             this.txtLastname.TabIndex = 2;
-            this.txtLastname.UseSystemPasswordChar = true;
             // 
             // txtName
             // 
