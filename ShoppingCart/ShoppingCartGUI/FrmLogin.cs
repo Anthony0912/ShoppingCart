@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ShoppingCartBOL;
+using ShoppingCartEntities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,10 +15,14 @@ namespace ShoppingCartGUI
     public partial class FrmLogin : Form
     {
         private Point MouseLocation;
+        private EUser eu;
+        private UserBOL ubol;
 
         public FrmLogin()
         {
             InitializeComponent();
+            eu = new EUser();
+            ubol = new UserBOL();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -48,6 +54,22 @@ namespace ShoppingCartGUI
         {
             new FrmSignUp().Show();
             this.Hide();
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                eu.Email = txtEmail.Text?.Trim();
+                eu.Password = txtPassword.Text?.Trim();
+                eu = ubol.Login(eu);
+                new Main { eu = eu }.ShowDialog();
+                Hide();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

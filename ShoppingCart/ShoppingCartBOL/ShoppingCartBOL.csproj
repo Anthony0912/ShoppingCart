@@ -44,5 +44,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserBOL.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShoppingCartDAL\ShoppingCartDAL.csproj">
+      <Project>{66dda17b-6b37-40c1-9414-64abc9c67807}</Project>
+      <Name>ShoppingCartDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShoppingCartEntities\ShoppingCartEntities.csproj">
+      <Project>{2429EFEF-A54A-4A78-80B7-3A3CFCB7573D}</Project>
+      <Name>ShoppingCartEntities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,9 +8,10 @@ namespace ShoppingCartEntities
 {
     public class EUser
     {
+        public int Id { set; get; }
         public string Name { set; get; }
         public string Lastname { set; get; }
-        public string Birthday { set; get; }
+        public DateTime Birthday { set; get; }
         public string Country { set; get; }
         public string State { set; get; }
         public string Place { set; get; }
