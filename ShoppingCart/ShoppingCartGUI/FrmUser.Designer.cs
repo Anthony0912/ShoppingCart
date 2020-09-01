@@ -1,6 +1,6 @@
 ﻿namespace ShoppingCartGUI
 {
-    partial class Main
+    partial class FrmUser
     {
         /// <summary>
         /// Required designer variable.

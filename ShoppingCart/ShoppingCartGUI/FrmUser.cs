@@ -11,10 +11,10 @@ using System.Windows.Forms;
 
 namespace ShoppingCartGUI
 {
-    public partial class Main : Form
+    public partial class FrmUser : Form
     {
-        public EUser eu{ get; set; }
-        public Main()
+        public EAccount ea { get; set; }
+        public FrmUser()
         {
             InitializeComponent();
         }
