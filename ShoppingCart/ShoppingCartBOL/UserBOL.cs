@@ -19,16 +19,16 @@ namespace ShoppingCartBOL
         {
             udal = new UserDAL();
         }
-        public EUser Login(EUser eu)
+        public EAccount Login(EUser eu)
         {
             if (string.IsNullOrEmpty(eu.Email) || string.IsNullOrEmpty(eu.Password) || 
                 !(Regex.IsMatch(eu.Email, EXPEMAIL)) || eu.Password.Length < 8)
             {
                 throw new Exception("El correo o contraseña son incorrectos.");
             }
-            return udal.getAllUser(eu);
+            return udal.Login(eu);
         }
-        public void SignUp(EUser eu)
+        public EAccount SignUp(EUser eu)
         {
             if (string.IsNullOrEmpty(eu.Name) || string.IsNullOrEmpty(eu.Lastname) ||
                 string.IsNullOrEmpty(eu.Email) || string.IsNullOrEmpty(eu.Password))
@@ -39,11 +39,14 @@ namespace ShoppingCartBOL
             {
                 throw new Exception("El formato del correo es invalido.");
             }
-            //if (udal.getAllUser(eu) != null)
-            //{
-            //    throw new Exception("El correo ya existe.");
-            //}
-            udal.SignUp(eu);
+            int id = udal.SignUp(eu);
+            if (id == 0)
+            {
+                throw new Exception("Es posible que esta cuenta este ocupada.");
+            }
+            EAccount ea = new EAccount() { IdUser = id, Account = "user" };
+            udal.InsertAccountUser(ea);
+            return ea;
         }
         public void UpdateUser(EUser eu)
         {

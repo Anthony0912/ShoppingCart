@@ -11,12 +11,39 @@ namespace ShoppingCartDAL
 {
     public class UserDAL
     {
-        public EUser getAllUser(EUser eu)
+        public EAccount Login(EUser eu)
         {
-            EUser t = new EUser();
             using (SqlConnection conn = new SqlConnection(ConnectionDB.conString))
             {
                 conn.Open();
+                EAccount ea = new EAccount();
+                string PasswordDB = "";
+                string sql = "SELECT account_users.id, account_users.id_user, account_users.account, users.id, " +
+                    "users.email, users.password FROM account_users INNER JOIN users ON " +
+                    "users.email = @email AND account_users.id_user = users.id;";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@email", eu.Email);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    ea.Id = reader.GetInt32(0);
+                    ea.IdUser = reader.GetInt32(1);
+                    ea.Account = reader.GetString(2);
+                    PasswordDB = reader.GetString(5);
+                }
+                if (!BCrypt.Net.BCrypt.Verify(eu.Password, PasswordDB))
+                {
+                    throw new Exception("El correo o contraseña son incorrectos.");
+                }
+                return ea;
+            }
+        }
+        public EUser getAllUser(EUser eu)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionDB.conString))
+            {
+                conn.Open();
+                EUser t = new EUser();
                 string sql = "SELECT id, name, lastname, birthday, country, state," +
                     " place, postal, direction_1, direction_2, email FROM users WHERE email = @email;";
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -27,24 +54,39 @@ namespace ShoppingCartDAL
                 {
                     throw new Exception("El correo o contraseña son incorrectos.");
                 }
+                return t;
             }
-            return t;
         }
 
-        public void SignUp(EUser eu)
+        public int SignUp(EUser eu)
         {
             using (SqlConnection conn = new SqlConnection(ConnectionDB.conString))
             {
                 conn.Open();
                 const int WorkFactor = 14;
                 string Password = BCrypt.Net.BCrypt.HashPassword(eu.Password, WorkFactor);
-                string sql = "INSERT INTO users (name, lastname, email, password) VALUES " +
-                    "(@name, @lastname, @email, @pass)";
+                string sql = "IF NOT EXISTS (SELECT email FROM users WHERE email = @email)" +
+                    "   INSERT INTO users(name, lastname, email, password) Output Inserted.id " +
+                    "   VALUES(@name, @lastname, @email, @pass); ";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@name", eu.Name);
                 cmd.Parameters.AddWithValue("@lastname", eu.Lastname);
                 cmd.Parameters.AddWithValue("@email", eu.Email);
                 cmd.Parameters.AddWithValue("@pass", Password);
+                object id = cmd.ExecuteScalar();
+                return Convert.ToInt32(id);
+            }
+        }
+
+        public void InsertAccountUser(EAccount ea)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionDB.conString))
+            {
+                conn.Open();
+                string sql = "INSERT INTO account_users (id_user, account) VALUES (@id_user, @account)";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@id_user", ea.IdUser);
+                cmd.Parameters.AddWithValue("@account", ea.Account);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -84,7 +126,6 @@ namespace ShoppingCartDAL
                 conn.Open();
             }
         }
-
         internal EUser getUser(SqlDataReader reader)
         {
             EUser eu = new EUser();

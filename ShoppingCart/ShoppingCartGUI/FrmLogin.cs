@@ -16,12 +16,14 @@ namespace ShoppingCartGUI
     {
         private Point MouseLocation;
         private EUser eu;
+        private EAccount ea;
         private UserBOL ubol;
 
         public FrmLogin()
         {
             InitializeComponent();
             eu = new EUser();
+            ea = new EAccount();
             ubol = new UserBOL();
         }
 
@@ -62,8 +64,15 @@ namespace ShoppingCartGUI
             {
                 eu.Email = txtEmail.Text?.Trim();
                 eu.Password = txtPassword.Text?.Trim();
-                eu = ubol.Login(eu);
-                new Main { eu = eu }.ShowDialog();
+                ea = ubol.Login(eu);
+                if (ea.Account.Equals("user"))
+                {
+                    new FrmUser { ea = ea }.ShowDialog();
+                }
+                else if (ea.Account.Equals("admin"))
+                {
+                    new FrmAdmin { ea = ea }.ShowDialog();
+                }
                 Hide();
             }
             catch (Exception ex)

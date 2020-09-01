@@ -74,8 +74,8 @@ namespace ShoppingCartGUI
                     throw new Exception("Tu contraseña debe tener más de ocho caracteres.");
                 }
 
-                ubol.SignUp(eu);
-                new Main { eu = eu }.ShowDialog();
+                EAccount ea = ubol.SignUp(eu);
+                new FrmUser { ea = ea }.ShowDialog();
                 Hide();
             }
             catch (Exception ex)
